@@ -1,7 +1,5 @@
 package com.orangetalents.transacoes.domain.modelo;
 
-import com.orangetalents.transacoes.controller.response.CartaoResponse;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -38,7 +36,7 @@ public class Cartao {
         return id;
     }
 
-    public CartaoResponse domainToResponse() {
-        return new CartaoResponse(id, email);
+    public com.orangetalents.transacoes.controller.response.CartaoResponse domainToResponse() {
+        return new com.orangetalents.transacoes.controller.response.CartaoResponse(id, email);
     }
 }

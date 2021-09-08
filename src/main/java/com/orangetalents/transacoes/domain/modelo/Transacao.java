@@ -1,5 +1,7 @@
 package com.orangetalents.transacoes.domain.modelo;
 
+import com.orangetalents.transacoes.controller.response.TransacaoResponse;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -48,5 +50,9 @@ public class Transacao {
         this.estabelecimento = estabelecimento;
         this.cartao = cartao;
         this.efetivadaEm = efetivadaEm;
+    }
+
+    public TransacaoResponse domainToResponse(){
+        return new TransacaoResponse(this.id, this.valor, this.estabelecimento.domainToResponse(), this.cartao.domainToResponse(), this.efetivadaEm);
     }
 }

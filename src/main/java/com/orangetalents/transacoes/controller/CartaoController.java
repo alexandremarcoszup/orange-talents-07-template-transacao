@@ -1,9 +1,12 @@
 package com.orangetalents.transacoes.controller;
 
 import com.orangetalents.transacoes.controller.request.CartaoRequest;
-import com.orangetalents.transacoes.controller.response.CartaoResponse;
+import com.orangetalents.transacoes.controller.response.TransacaoResponse;
 import com.orangetalents.transacoes.domain.modelo.Cartao;
 import com.orangetalents.transacoes.service.CartaoService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -22,8 +25,8 @@ public class CartaoController {
     }
 
     @PostMapping
-    public ResponseEntity<CartaoResponse> createCard(@RequestBody @Valid CartaoRequest cartaoRequest,
-                                                     UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<com.orangetalents.transacoes.controller.response.CartaoResponse> createCard(@RequestBody @Valid CartaoRequest cartaoRequest,
+                                                                                                      UriComponentsBuilder uriComponentsBuilder) {
 
         Cartao cartao = cartaoService.obtemCartao(cartaoRequest);
 
@@ -33,11 +36,20 @@ public class CartaoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteCart(@PathVariable("id") String idCartao){
-
+    public ResponseEntity deleteCart(@PathVariable("id") String idCartao) {
 
 
         cartaoService.deleteCartao(idCartao);
+
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Page<TransacaoResponse>> getLastTransactionOfCard(
+            @PathVariable("id") String idCartao, @PageableDefault Pageable pageable) {
+
+        Page<TransacaoResponse> transacoes = cartaoService.getTransactions(idCartao, pageable);
+
+        return ResponseEntity.ok(transacoes);
     }
 }
