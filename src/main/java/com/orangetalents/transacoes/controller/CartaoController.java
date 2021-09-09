@@ -45,8 +45,8 @@ public class CartaoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Page<TransacaoResponse>> getLastTransactionOfCard(
-            @PathVariable("id") String idCartao, @PageableDefault Pageable pageable) {
+    public ResponseEntity<Page<TransacaoResponse>> getLastTransactionOfCard(@PathVariable("id") String idCartao,
+                                                                            @PageableDefault Pageable pageable) {
 
         Page<TransacaoResponse> transacoes = cartaoService.getTransactions(idCartao, pageable);
 
